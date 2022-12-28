@@ -1,4 +1,6 @@
-import TripPresenter from './presenter/trip-presenter.js';
+import ListFilterView from './view/list-filter-view.js';
+import TripPresenter from './presenter/trips-presenter.js';
+import {render} from './render.js';
 import PointsModel from './model/points-model.js';
 // Контейнер для фильтров
 const headerElement = document.querySelector('.trip-controls');
@@ -8,9 +10,10 @@ const tripEventsElement = document.querySelector('.trip-events');
 const pointsModel = new PointsModel();
 // Новый презентер с параметрами
 const tripPresenter = new TripPresenter({
-  boardContainer: tripEventsElement,
-  filterContainer: headerElement,
+  pointsContainer: tripEventsElement,
   pointsModel
 });
+
+render(new ListFilterView, headerElement);
 
 tripPresenter.init();

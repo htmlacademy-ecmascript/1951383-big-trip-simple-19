@@ -1,14 +1,12 @@
 
-import {createElement} from '../render.js';
-import { destinations, offersByTypes } from '../mock/mock.js';
+import { createElement } from '../render.js';
+import { destinations, offersTypes } from '../mock/mock.js';
+import { DATE_FORMAT_DATE, DATE_FORMAT_TIME } from '../util.js';
 import dayjs from 'dayjs';
-
-const DATE_FORMAT_DATE = 'DD MMM';
-const DATE_FORMAT_TIME = 'HH:mm';
 
 const createPointTemplate = (point) =>{
   const {type, offers, destination, basePrice, dateFrom, dateTo} = point;
-  const pointTypeOffer = offersByTypes.find((offer) => offer.type === type);
+  const pointTypeOffer = offersTypes.find((offer) => offer.type === type);
   const pointDestination = destinations.find((item) => destination === item.id);
   const checkedOffers = pointTypeOffer.offers
     .filter((offer) => offers.includes(offer.id));
@@ -16,14 +14,14 @@ const createPointTemplate = (point) =>{
   const offersTemplate = () => {
     if (!checkedOffers.length) {
       return `<li class="event__offer">
-    <span class="event__offer-title">No additional offers</span>
-    </li>`;
+        <span class="event__offer-title">No additional offers</span>
+        </li>`;
     } else {
       const template = checkedOffers.map((offer) => `<li class="event__offer">
-      <span class="event__offer-title">${offer.title}</span>
-      &plus;&euro;&nbsp;
-      <span class="event__offer-price">${offer.price}</span>
-    </li>`).join('');
+        <span class="event__offer-title">${offer.title}</span>
+        &plus;&euro;&nbsp;
+        <span class="event__offer-price">${offer.price}</span>
+        </li>`).join('');
       return template;
     }
   };
@@ -61,23 +59,26 @@ const createPointTemplate = (point) =>{
 };
 
 export default class PointView {
+  #element = null;
+  #point = null;
+
   constructor({point}) {
-    this.point = point;
+    this.#point = point;
   }
 
-  getTemplate() {
-    return createPointTemplate(this.point);
+  get template() {
+    return createPointTemplate(this.#point);
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
     }
 
-    return this.element;
+    return this.#element;
   }
 
   removeElement() {
-    this.element = null;
+    this.#element = null;
   }
 }

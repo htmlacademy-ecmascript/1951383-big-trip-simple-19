@@ -1,252 +1,250 @@
-import { getRandomArrayElement } from '../util.js';
+import {getRandomNumber, getRandomArrayElement} from '../util.js';
 
-// Функция для генерации случайного числа для заглушки
-const randomPic = () => Math.random();
+const MIN_NUMBER = 1;
+const MAX_NUMBER = 10;
 
-// Моки для всех типов точки маршрута
-const offersByTypes = [
+const offersTypes = [
   {
-    type: 'flight',
-    offers:[
-      {
-        id: 1,
-        title: 'Upgrade to a business class',
-        price: 120
-      },
-      {
-        id: 2,
-        title: 'Add luggage',
-        price: 30
-      },
-      {
-        id: 3,
-        title: 'Add meal',
-        price: 10
-      }
-    ]
+    'type': 'taxi',
+    'offers': [{
+      'id': 1,
+      'title': 'Choose the radio station',
+      'price': 120
+    },
+    {
+      'id': 2,
+      'title': 'Upgrade to a business class',
+      'price': 140
+    }]
   },
   {
-    type: 'taxi',
-    offers: [
-      {
-        id: 1,
-        title: 'Order Uber',
-        price: 20
-      },
-      {
-        id: 2,
-        title: 'Choose radiostation',
-        price: 5
-      }
-    ]
+    'type': 'bus',
+    'offers': [{
+      'id': 1,
+      'title': 'Choose the radio station',
+      'price': 120
+    },
+    {
+      'id': 2,
+      'title': 'Upgrade to a business class',
+      'price': 140
+    }]
   },
   {
-    type: 'bus',
-    offers:[]
+    'type': 'train',
+    'offers': [{
+      'id': 1,
+      'title': 'Choose the radio station',
+      'price': 120
+    },
+    {
+      'id': 2,
+      'title': 'Upgrade to a business class',
+      'price': 140
+    }]
   },
   {
-    type: 'train',
-    offers: [
-      {
-        id: 1,
-        title: 'Choose seats',
-        price: 50
-      },
-      {
-        id: 2,
-        title: 'Add meal',
-        price: 20
-      }
-    ]
+    'type': 'ship',
+    'offers': [{
+      'id': 1,
+      'title': 'Choose the radio station',
+      'price': 120
+    },
+    {
+      'id': 2,
+      'title': 'Upgrade to a business class',
+      'price': 140
+    }]
   },
   {
-    type: 'drive',
-    offers: [
-      {
-        id: 1,
-        title: 'Rent a car',
-        price: 250
-      }
-    ]
+    'type': 'drive',
+    'offers': [{
+      'id': 1,
+      'title': 'Choose the radio station',
+      'price': 120
+    },
+    {
+      'id': 2,
+      'title': 'Upgrade to a business class',
+      'price': 140
+    }]
   },
   {
-    type: 'ship',
-    offers: [
-      {
-        id: 1,
-        title: 'Choose seats',
-        price: 100
-      },
-      {
-        id: 2,
-        title: 'Add meal',
-        price: 30
-      },
-      {
-        id: 3,
-        title: 'Vomiting pills',
-        price: 10
-      }
-    ]
+    'type': 'flight',
+    'offers': [{
+      'id': 3,
+      'title': 'Choose seats',
+      'price': 5
+    },
+    {
+      'id': 2,
+      'title': 'Upgrade to a business class',
+      'price': 140
+    },
+    {
+      'id': 4,
+      'title': 'Add meal',
+      'price': 15
+    }]
   },
   {
-    type: 'restaurant',
-    offers: []
+    'type': 'check-in',
+    'offers': [{
+      'id': 3,
+      'title': 'Choose seats',
+      'price': 5
+    },
+    {
+      'id': 4,
+      'title': 'Add meal',
+      'price': 15
+    }]
   },
   {
-    type: 'sightseeing',
-    offers: [
-      {
-        id: 1,
-        title: 'Book tickets',
-        price: 50
-      },
-      {
-        id: 2,
-        title: 'Lunch',
-        price: 200
-      }
-    ]
+    'type': 'sightseeing',
+    'offers': [{
+      'id': 1,
+      'title': 'Choose the radio station',
+      'price': 120
+    },
+    {
+      'id': 2,
+      'title': 'Upgrade to a business class',
+      'price': 140
+    }]
   },
   {
-    type: 'check-in',
-    offers: [
-      {
-        id: 1,
-        title: 'Add breakfast',
-        price: 50
-      },
-      {
-        id: 2,
-        title: 'Upgrade room',
-        price: 500
-      }
-    ]
+    'type': 'restaurant',
+    'offers': [{
+      'id': 1,
+      'title': 'Choose the radio station',
+      'price': 120
+    },
+    {
+      'id': 2,
+      'title': 'Upgrade to a business class',
+      'price': 140
+    }]
   }
 ];
 
-// Моки для направлений
 const destinations = [
   {
     id: 1,
-    description: 'Chamonix, is a beautiful city, a true asian pearl, with crowded streets.',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget.',
     name: 'Chamonix',
     pictures: [
       {
-        src: `https://loremflickr.com/248/152?random=${randomPic}`,
-        description: 'Chamonix parliament building'
+        src: `https://loremflickr.com/248/152?random=${getRandomNumber(MIN_NUMBER, MAX_NUMBER)}`,
       }
     ]
   },
   {
     id: 2,
-    description: 'Gen Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget.',
+    description: 'Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante.',
     name: 'Geneve',
     pictures: [
       {
-        src: `https://loremflickr.com/248/152?random=${randomPic}`,
-        description: 'Gen Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. '
+        src: `https://loremflickr.com/248/152?random=${getRandomNumber(MIN_NUMBER, MAX_NUMBER)}`,
       }
     ]
   },
   {
     id: 3,
-    description: 'Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra.',
+    description: 'Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.',
     name: 'Amsterdam',
     pictures: [
       {
-        src: `https://loremflickr.com/248/152?random=${randomPic}`,
-        description: 'Amst Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.'
+        src: `https://loremflickr.com/248/152?random=${getRandomNumber(MIN_NUMBER, MAX_NUMBER)}`,
       }
     ]
   }
 ];
-// Моки для точек
-const mockPoints = [
+
+const MOCK_POINTS = [
   {
     id: 0,
-    type: 'check-in',
-    offers: [1, 2],
+    type: 'taxi',
+    offers: [1],
     destination: 2,
     basePrice: 500,
-    dateFrom: '2019-07-10T22:55:56.845Z',
-    dateTo: '2019-07-11T11:22:13.375Z'
+    dateFrom: '2019-07-11T20:35:56.845Z',
+    dateTo: '2019-07-12T11:25:13.375Z'
   },
   {
     id: 1,
-    type: 'sightseeing',
+    type: 'bus',
     offers: [1, 2],
     destination: 1,
-    basePrice: 200,
-    dateFrom: '2019-07-10T22:55:56.845Z',
+    basePrice: 40,
+    dateFrom: '2019-07-10T21:50:00.845Z',
     dateTo: '2019-07-11T11:22:13.375Z'
   },
   {
     id: 2,
-    type: 'restaurant',
+    type: 'train',
     offers: [],
     destination: 1,
-    basePrice: 300,
-    dateFrom: '2019-07-10T22:55:56.845Z',
-    dateTo: '2019-07-11T11:22:13.375Z'
+    basePrice: 200,
+    dateFrom: '2019-07-09T22:55:56.845Z',
+    dateTo: '2019-07-10T12:22:13.375Z'
   },
   {
     id: 3,
-    type: 'taxi',
+    type: 'ship',
+    offers: [1],
+    destination: 2,
+    basePrice: 80,
+    dateFrom: '2019-07-10T22:50:56.845Z',
+    dateTo: '2019-07-11T11:22:10.375Z'
+  },
+  {
+    id: 4,
+    type: 'drive',
     offers: [1, 2],
+    destination: 3,
+    basePrice: 90,
+    dateFrom: '2019-07-11T10:55:56.845Z',
+    dateTo: '2019-07-11T11:22:13.375Z'
+  },
+  {
+    id: 5,
+    type: 'flight',
+    offers: [2],
+    destination: 1,
+    basePrice: 150,
+    dateFrom: '2019-07-10T22:55:56.845Z',
+    dateTo: '2019-07-10T11:23:59.005Z'
+  },
+  {
+    id: 6,
+    type: 'check-in',
+    offers: [2],
+    destination: 3,
+    basePrice: 150,
+    dateFrom: '2019-07-10T12:55:56.845Z',
+    dateTo: '2019-07-10T22:22:13.375Z'
+  },
+  {
+    id: 7,
+    type: 'sightseeing',
+    offers: [],
     destination: 2,
     basePrice: 100,
     dateFrom: '2019-07-10T22:55:56.845Z',
     dateTo: '2019-07-11T11:22:13.375Z'
   },
   {
-    id: 4,
-    type: 'bus',
-    offers: [],
-    destination: 3,
-    basePrice: 50,
-    dateFrom: '2019-07-10T22:55:56.845Z',
-    dateTo: '2019-07-11T11:22:13.375Z'
-  },
-  {
-    id: 5,
-    type: 'train',
-    offers: [1,2],
-    destination: 1,
-    basePrice: 150,
-    dateFrom: '2019-07-10T22:55:56.845Z',
-    dateTo: '2019-07-11T11:22:13.375Z'
-  },
-  {
-    id: 6,
-    type: 'ship',
-    offers: [1, 2, 3],
-    destination: 3,
-    basePrice: 200,
-    dateFrom: '2019-07-10T22:55:56.845Z',
-    dateTo: '2019-07-11T11:22:13.375Z'
-  },
-  {
-    id: 7,
-    type: 'drive',
-    offers: [1],
-    destination: 2,
-    basePrice: 120,
-    dateFrom: '2019-07-10T22:55:56.845Z',
-    dateTo: '2019-07-11T11:22:13.375Z'
-  },
-  {
     id: 8,
-    type: 'flight',
-    offers: [1, 2, 3],
+    type: 'restaurant',
+    offers: [1, 2],
     destination: 1,
-    basePrice: 300,
+    basePrice: 100,
     dateFrom: '2019-07-10T22:55:56.845Z',
     dateTo: '2019-07-11T11:22:13.375Z'
   }
 ];
-// Функция для возврата случайной точки
-const getRandomPoint = () => (getRandomArrayElement(mockPoints));
 
+const getRandomPoint = () => (getRandomArrayElement(MOCK_POINTS));
 
-export {mockPoints, destinations, offersByTypes, getRandomPoint};
+export { destinations, offersTypes, getRandomPoint};

@@ -20,24 +20,25 @@ function createListFilterTemplate() {
 
 // Экспортируем класс
 export default class ListFilterView {
+  #element = null;
   // Возвращаем разметку шаблона
-  getTemplate() {
+  get template() {
     return createListFilterTemplate();
   }
 
   // Создаем элемент
-  getElement() {
+  get element() {
     // Если свойство элемент не заполнено
-    if (!this.element) {
-      // Мы заполняем свойство результатом createElement
-      this.element = createElement(this.getTemplate());
+    if (!this.#element) {
+      // Мы заполняем свойство результатом createElement из геттера
+      this.#element = createElement(this.template);
     }
 
-    return this.element;
+    return this.#element;
   }
 
   // Предусматриваем метод для удаления элемента
   removeElement() {
-    this.element = null;
+    this.#element = null;
   }
 }

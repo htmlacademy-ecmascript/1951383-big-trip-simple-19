@@ -1,54 +1,36 @@
-import { render, RenderPosition } from '../render.js';
-import { isEscapeKey } from '../utils.js';
-
-// Наш контейнер для отрисовки
-import PointListView from '../view/point-list-view.js';
-// Контейнер для сортировки
+import { render } from '../render.js';
+import TripEventListView from '../view/trip-event-list-view';
 import ListSortView from '../view/list-sort-view.js';
-// Форма редактирования
 import EditPointView from '../view/edit-point-view.js';
-// Точка маршрута
 import PointView from '../view/trip-point-view.js';
-// Форма создания
-import NewPointView from '../view/new-point-view.js';
-// Пустой список
-//import ListEmptyView from '../view/list-empty-view.js';
+import ListFilterView from '../view/list-filter-view.js';
+// import NewPointView from '../view/add-new-point-view.js';
+import { isEscapeKey } from '../util.js';
 
+const tripEventsElement = document.querySelector('.trip-events');
 
 export default class TripPresenter {
-  #pointListComponent = new PointListView();
+  #tripComponent = new TripEventListView();
 
-  #pointsContainer = null;
+  #pointContainer = null;
   #pointsModel = null;
   #listPoints = [];
 
-  constructor({pointsContainer, pointsModel}) {
-    this.#pointsContainer = pointsContainer;
+  constructor({ pointContainer , pointsModel}) {
+    this.#pointContainer = pointContainer ;
     this.#pointsModel = pointsModel;
   }
 
   init() {
     this.#listPoints = [...this.#pointsModel.points];
-
-    this.#renderPointsList();
-  }
-
-  #renderPointsList() {
-    // Если ничего нет - вьюшка с надписью
-    //if (!this.#listPoints.length) {
-    //render(new ListEmptyView(), this.#pointsContainer);
-    //return;
-    //}
-
-    render(new ListSortView(), this.#pointsContainer);
-    render(this.#pointListComponent, this.#pointsContainer);
-    render(new NewPointView(), this.#pointListComponent.element, RenderPosition.AFTERBEGIN);
+    render(new ListFilterView(), this.#pointContainer );
+    render(new ListSortView(), tripEventsElement);
+    render(this.#tripComponent, tripEventsElement);
 
     this.#listPoints.forEach((point) => this.#renderPoint(point));
   }
 
-
-  #renderPoint(point) {
+  #renderPoint(point){
     const pointComponent = new PointView({point});
     const pointEditComponent = new EditPointView({point});
 
@@ -56,35 +38,33 @@ export default class TripPresenter {
     const editPointForm = pointEditComponent.element.querySelector('form');
     const editRollupBtn = editPointForm.querySelector('.event__rollup-btn');
 
-    const replacePointToEditForm = () => {
-      this.#pointListComponent.element.replaceChild(pointEditComponent.element, pointComponent.element);
-      editRollupBtn.addEventListener('click', onCloseEditPointForm);
-      editPointForm.addEventListener('submit', onCloseEditPointForm);
+    const replacePointToForm = () => {
+      this.#tripComponent.element.replaceChild(pointEditComponent.element, pointComponent.element);
+      editRollupBtn.addEventListener('click', onCloseEditForm);
+      editPointForm.addEventListener('submit', onCloseEditForm);
       document.addEventListener('keydown', onEscKeyDown);
     };
 
-    const replaceEditFormToPoint = () => {
-      this.#pointListComponent.element.replaceChild(pointComponent.element, pointEditComponent.element);
-      editRollupBtn.removeEventListener('click', onCloseEditPointForm);
-      editPointForm.removeEventListener('submit', onCloseEditPointForm);
+    const replaceFormToPoint = () => {
+      this.#tripComponent.element.replaceChild(pointComponent.element, pointEditComponent.element);
       document.removeEventListener('keydown', onEscKeyDown);
     };
 
-    function onEscKeyDown(evt) {
+    function onEscKeyDown (evt) {
       if (isEscapeKey) {
-        onCloseEditPointForm(evt);
+        onCloseEditForm(evt);
       }
     }
 
-    function onCloseEditPointForm (evt) {
-      evt.preventDefault();
-      replaceEditFormToPoint();
-    }
-
     pointRollupBtn.addEventListener('click', () => {
-      replacePointToEditForm();
+      replacePointToForm();
     });
 
-    render(pointComponent, this.#pointListComponent.element);
+    function onCloseEditForm(evt){
+      evt.preventDefault();
+      replaceFormToPoint();
+    }
+
+    render(pointComponent, this.#tripComponent.element);
   }
 }

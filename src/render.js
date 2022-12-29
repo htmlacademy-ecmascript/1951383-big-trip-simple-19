@@ -17,7 +17,7 @@ function createElement(template) {
 
 // Функция, позволяющая вставить элемент в определенное место
 function render(component, container, place = RenderPosition.BEFOREEND) {
-  container.insertAdjacentElement(place, component.element());
+  container.insertAdjacentElement(place, component.element);
 }
 
 export {RenderPosition, createElement, render};

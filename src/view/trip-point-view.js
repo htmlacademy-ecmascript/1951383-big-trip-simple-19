@@ -1,8 +1,8 @@
 
 import { createElement } from '../render.js';
 import { destinations, offersTypes } from '../mock/mock.js';
-import { DATE_FORMAT_DATE, DATE_FORMAT_TIME } from '../util.js';
 import dayjs from 'dayjs';
+import { DATE_FORMAT_DATE, DATE_FORMAT_TIME } from '../const.js';
 
 const createPointTemplate = (point) =>{
   const {type, offers, destination, basePrice, dateFrom, dateTo} = point;

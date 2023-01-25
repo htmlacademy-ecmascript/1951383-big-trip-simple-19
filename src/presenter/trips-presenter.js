@@ -3,11 +3,9 @@ import TripEventListView from '../view/trip-event-list-view';
 import ListSortView from '../view/list-sort-view.js';
 import EditPointView from '../view/edit-point-view.js';
 import PointView from '../view/trip-point-view.js';
-import ListFilterView from '../view/list-filter-view.js';
-// import NewPointView from '../view/add-new-point-view.js';
 import { isEscapeKey } from '../util.js';
 
-const tripEventsElement = document.querySelector('.trip-events');
+import ListEmptyView from '../view/list-empty-view.js';
 
 export default class TripPresenter {
   #tripComponent = new TripEventListView();
@@ -23,10 +21,18 @@ export default class TripPresenter {
 
   init() {
     this.#listPoints = [...this.#pointsModel.points];
-    render(new ListFilterView(), this.#pointContainer );
-    render(new ListSortView(), tripEventsElement);
-    render(this.#tripComponent, tripEventsElement);
 
+    this.#renderPointsList();
+  }
+
+  #renderPointsList() {
+    if (!this.#listPoints.length) {
+      render(new ListEmptyView(), this.#pointContainer);
+      return;
+    }
+
+    render(new ListSortView(), this.#pointContainer);
+    render(this.#tripComponent, this.#pointContainer);
     this.#listPoints.forEach((point) => this.#renderPoint(point));
   }
 
